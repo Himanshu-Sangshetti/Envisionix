@@ -1,8 +1,20 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #0f1729;
+  --foreground: #ffffff;
+  --glass-bg: rgba(255, 255, 255, 0.08);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --glass-shine: rgba(255, 255, 255, 0.05);
+  --accent-primary: #3b82f6;
+  --accent-secondary: #10b981;
+  --accent-gradient: linear-gradient(135deg, var(--accent-primary), #4f46e5);
+  --text-gradient: linear-gradient(to right, var(--accent-primary), var(--accent-secondary));
+  --glow-primary: rgba(59, 130, 246, 0.15);
+  --glow-secondary: rgba(16, 185, 129, 0.15);
+  --hero-bg: #0f1729;
+  --hero-bar-bg: #0f1729;
+  --hero-bar-border: rgba(255, 255, 255, 0.03);
 }
 
 @theme inline {
@@ -12,15 +24,322 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
+@media (prefers-color-scheme: light) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #f0f4f8;
+    --foreground: #1a202c;
+    --glass-bg: rgba(255, 255, 255, 0.7);
+    --glass-border: rgba(255, 255, 255, 0.2);
+    --glass-shine: rgba(255, 255, 255, 0.4);
   }
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
+  background-image: 
+    radial-gradient(circle at 20% 30%, var(--glow-primary), transparent 25%),
+    radial-gradient(circle at 80% 70%, var(--glow-secondary), transparent 25%);
+  background-attachment: fixed;
 }
+
+.glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
+}
+
+.glass-input {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border: 1px solid var(--glass-border);
+  transition: all 0.3s ease;
+}
+
+.glass-input:focus {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+}
+
+.glass-button {
+  background: var(--accent-gradient);
+  border: none;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.glass-button:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: all 0.6s ease;
+}
+
+.glass-button:hover:before {
+  left: 100%;
+}
+
+.glass-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.glass-card:before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    to bottom right,
+    rgba(255, 255, 255, 0.1) 0%,
+    rgba(255, 255, 255, 0.05) 50%,
+    transparent 100%
+  );
+  transform: rotate(30deg);
+  pointer-events: none;
+}
+
+.text-gradient {
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  background-image: var(--text-gradient);
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+.animate-pulse-slow {
+  animation: pulse 3s infinite ease-in-out;
+}
+
+.hero-gradient {
+  background: linear-gradient(to bottom, rgba(0,0,0,1) 0%, var(--background) 100%);
+}
+
+.hero-text-shadow {
+  text-shadow: 0 0 40px rgba(0,0,0,0.5);
+}
+
+/* Responsive spacing variables for the bars */
+:root {
+  --bar-gap-sm: 4px;
+  --bar-gap-md: 8px;
+  --bar-gap-lg: 16px;
+}
+
+@media (min-width: 640px) {
+  :root {
+    --bar-gap-sm: 8px;
+  }
+}
+
+@media (min-width: 768px) {
+  :root {
+    --bar-gap-sm: 12px;
+  }
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --bar-gap-sm: 16px;
+  }
+}
+
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(
+    to bottom,
+    rgba(59, 130, 246, 0.5),
+    rgba(16, 185, 129, 0.5)
+  );
+  border-radius: 10px;
+  border: 2px solid rgba(255, 255, 255, 0.05);
+  transition: all 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(
+    to bottom,
+    rgba(59, 130, 246, 0.7),
+    rgba(16, 185, 129, 0.7)
+  );
+}
+
+/* Firefox scrollbar */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(59, 130, 246, 0.5) rgba(255, 255, 255, 0.03);
+}
+
+/* For devices that support it, add a subtle glow to the scrollbar */
+@supports (scrollbar-glow: 10px) {
+  ::-webkit-scrollbar-thumb {
+    box-shadow: 0 0 10px rgba(59, 130, 246, 0.3);
+  }
+}
+
+/* Ensure smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* Add these for an animated scrollbar effect */
+
+@keyframes scrollGlow {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(
+    90deg,
+    rgba(59, 130, 246, 0.5),
+    rgba(16, 185, 129, 0.5),
+    rgba(79, 70, 229, 0.5)
+  );
+  background-size: 200% 200%;
+  animation: scrollGlow 6s ease infinite;
+  border-radius: 10px;
+  border: 2px solid rgba(255, 255, 255, 0.05);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-size: 200% 200%;
+  animation: scrollGlow 3s ease infinite;
+}
+
+
+
+
+.feature-card {
+  position: relative;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  min-height: 220px; /* Consistent height */
+}
+
+.feature-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3);
+}
+
+.icon-container {
+  border-radius: 12px;
+  box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.15);
+}
+
+.features-grid {
+  margin-top: 4rem;
+  padding: 0 1rem; /* Added padding for better responsiveness */
+}
+
+
+
+
+
+@keyframes rotatePulse {
+  0% {
+    transform: rotate(0deg) scale(1);
+  }
+  50% {
+    transform: rotate(180deg) scale(1.1);
+  }
+  100% {
+    transform: rotate(360deg) scale(1);
+  }
+}
+
+
+.contact-section {
+  position: relative;
+  overflow: hidden;
+}
+
+.contact-section::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+  animation: glowEffect 8s infinite alternate;
+  z-index: 0;
+}
+
+@keyframes glowEffect {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.pintura-root {
+  --color-background: 0, 0, 0;      /* Dark background */
+  --color-foreground: 255, 255, 255; /* Light text */
+  --color-border: #2d2d2d;
+  --color-control-background: rgb(41, 41, 41);
+  --color-control-foreground: #ffffff;
+  --color-highlight-background: #3a3a3a;
+  width: 100% !important;
+  height: 700px !important;
+}
+
+
+.pintura-editor {
+  --color-background: 10, 15, 29;
+  --color-foreground: 255, 255, 255;
+}
+
+.my-editor {
+  height: 700px;
+  width: 100%;
+}
+
