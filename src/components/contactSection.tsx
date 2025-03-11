@@ -23,7 +23,7 @@ export function ContactSection() {
         </p>
 
         <motion.a
-          href="himanshusangshetty@gmail.com"
+          href="mailto:himanshusangshetty@gmail.com"
           className="mt-6 px-6 py-3 bg-blue-500 text-white font-medium rounded-lg shadow-md hover:bg-blue-600 hover:scale-105 transition-all duration-300"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}

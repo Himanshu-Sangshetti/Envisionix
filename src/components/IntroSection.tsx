@@ -26,10 +26,10 @@ export function IntroSection() {
   const [activeTab, setActiveTab] = useState<string | null>(null);
 
   return (
-    <div className="relative text-left text-white p-10 flex items-center gap-6">
+    <div className="relative text-left text-white p-6 sm:p-10 flex flex-col sm:flex-row sm:items-center gap-6">
       {/* Text Section */}
-      <div className="w-full">
-        <h1 className="text-4xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-teal-300">
+      <div className="w-full mb-6 sm:mb-0">
+        <h1 className="text-3xl sm:text-4xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-teal-300">
           Envisionix: See AI Differently
         </h1>
         <p className="text-lg mt-3 opacity-80">
@@ -38,21 +38,23 @@ export function IntroSection() {
       </div>
 
       {/* Flipping Card Section */}
-      <div className="flex gap-6 w-full">
+      <div className="flex flex-col sm:flex-row gap-6 w-full justify-center sm:justify-start">
         {tabs.map((tab, index) => (
           <motion.div
             key={tab.title}
             onClick={() => setActiveTab(activeTab === tab.title ? null : tab.title)}
             className={`cursor-pointer relative rounded-xl text-sm font-medium overflow-hidden
-              ${index === 3 ? 'w-96' : 'w-48'} h-48`} // For the last image box, adjust width
+              ${index === 3 ? 'w-full sm:w-80' : 'w-full sm:w-48'} h-48`} // Adjusted width for mobile
           >
-            {/* If it's the last box, just show the image */}
+            {/* If it's the last box (Gallery), hide the image on mobile */}
             {index === 3 ? (
-              <motion.img
-                src={tab.image}
-                alt="Gallery"
-                className="w-full h-full object-cover rounded-xl"
-              />
+              <motion.div className="hidden sm:block">
+                <motion.img
+                  src={tab.image}
+                  alt="Gallery"
+                  className="w-full h-full object-cover rounded-xl"
+                />
+              </motion.div>
             ) : (
               <motion.div
                 className={`absolute w-full h-full flex items-center justify-center rounded-xl p-6 transition-all duration-300 ease-in-out border-2 border-transparent
@@ -75,3 +77,4 @@ export function IntroSection() {
     </div>
   );
 }
+    
